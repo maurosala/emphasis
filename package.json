@@ -1,0 +1,19 @@
+{
+  "name": "emphasis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@kubernetes/client-node": "^0.18.1",
+    "js-yaml": "^4.1.0",
+    "nested-property": "^4.0.0",
+    "pino": "^8.8.0",
+    "pino-pretty": "^9.1.1"
+  }
+}
