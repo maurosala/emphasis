@@ -1,4 +1,5 @@
 const k8s = require('@kubernetes/client-node')
+const { default: axios } = require('axios')
 const yaml = require('js-yaml')
 const np = require('nested-property')
 
@@ -15,6 +16,16 @@ const pod = async (name, prop) => {
   try {
     const data = await k8sApi.readNamespacedPod(name, ns)
     const value = np.get(data.body, prop)
+    return value
+  } catch {
+    return null
+  }
+}
+
+const api = async (url, prop) => {
+  try {
+    const { data } = await axios.get(url)
+    const value = np.get(data, prop)
     return value
   } catch {
     return null
@@ -43,5 +54,6 @@ const apply = async (file) => {
 
 module.exports = {
   apply,
-  pod
+  pod,
+  api
 }

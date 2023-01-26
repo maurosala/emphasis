@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: all-nginx
+  namespace: emphasis
+  labels:
+    a: { pod(a-nginx, metadata.uid) }
+    b: { pod(b-nginx, metadata.uid) }
+    c: { pod(c-nginx, metadata.uid) }
+    city: { api(https://jsonplaceholder.typicode.com/users/1, address.city) }
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.14.2
+      ports:
+        - containerPort: 80

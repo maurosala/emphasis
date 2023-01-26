@@ -17,7 +17,9 @@ const main = async () => {
   const regex = /[^{}]+(?=})/gm
   yamlList.forEach((yaml) => {
     if (regex.test(yaml.content)) {
-      yaml.content.match(regex).forEach(async (match) => {
+      const m = yaml.content.match(regex)
+      let valid = 0
+      m.forEach(async (match) => {
         const rx = /\(([^()]*)\)/g
         const [name, prop] = rx
           .exec(match.trim())[1]
@@ -25,24 +27,19 @@ const main = async () => {
           .map((s) => s.trim())
         const value = await core[match.split('(')[0].trim()](name, prop)
         if (value) {
-          if (parseInt(value)) {
-            yaml.content = yaml.content.replace(`{${match}}`, `"${value}"`)
-          } else {
-            yaml.content = yaml.content.replace(`{${match}}`, value)
-          }
+          yaml.content = yaml.content.replace(`{${match}}`, `"${value}"`)
+          valid++
+        }
+        if (valid === m.length) {
           core.apply(yaml)
-        } else {
-          logger.error(
-            `Missing requirement for ${yaml.name}: ${name} (${prop})`
-          )
         }
       })
     } else {
       core.apply(yaml)
     }
   })
-  console.log('---')
+  logger.info('Run')
 }
 
-// setInterval(main, 10000)
-main()
+setInterval(main, 10000)
+// main()

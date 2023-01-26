@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@kubernetes/client-node": "^0.18.1",
+    "axios": "^1.2.4",
     "js-yaml": "^4.1.0",
     "nested-property": "^4.0.0",
     "pino": "^8.8.0",
